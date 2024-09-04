@@ -8,6 +8,9 @@ import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzFlexModule } from 'ng-zorro-antd/flex';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { UsersService } from './services/users/users.service';
+import { RegisterService } from './services/register/register.service';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
 @Component({
   selector: 'app-root',
@@ -22,11 +25,27 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
       NzBreadCrumbModule, 
       NzAvatarModule,
       NzFlexModule,
-      NzToolTipModule
+      NzToolTipModule,
+      NzDropDownModule,
     ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   isCollapsed = false;
+  
+  title : any; 
+  constructor(private userService: UsersService, public registerService: RegisterService) {}
+
+  ngOninit(){
+   
+  }
+
+
+  isLogged(): boolean {
+    return this.userService.getCurrentUser()!==null;
+  }
+onClickLogout(): void {
+  this.userService.logout();
+}
 }
